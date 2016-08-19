@@ -23,8 +23,9 @@ This is currently a work in progress. Here is the roadmap:
 
 - [x] Braitenberg drawing code
 - [x] Braitenberg differential drive
-- [ ] Sliders for direct wheel speed control
+- [x] Sliders for direct wheel speed control
 - [ ] Light, Sensors and World objects
+- [ ] Boundary behavior
 - [ ] Neural network for the Braitenberg vehicle
 - [ ] Following/avoiding the mouse proof-of-concept
 - [ ] Sliders for neural network weights
