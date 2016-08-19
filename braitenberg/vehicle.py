@@ -1,6 +1,6 @@
 
 
-class Vehicule:
+class Vehicle:
     
     
     def __init__(self, x, y, angle=0.0, scale=1.0):

@@ -1,7 +1,7 @@
 
-from vehicule import Vehicule
+from vehicle import Vehicle
 
-vehicule = Vehicule(400, 400, scale=0.5)
+vehicle = Vehicle(400, 400, scale=0.75)
 
 def setup():
     smooth(8)
@@ -13,8 +13,9 @@ def setup():
 def draw():
     background(255)
     for _ in range(1000):
-        vehicule.step(0.00001)
-    vehicule.draw()
+        vehicle.step(0.00001)
+    vehicle.draw()
+    
     stroke(0, 100)
     line(400, 0, 400, 800)
     line(0, 400, 800, 400)
