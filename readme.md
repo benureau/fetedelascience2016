@@ -12,6 +12,10 @@ To install, you need to download and install [Processing](https://processing.org
 At the time of writing, [Processing 3.1.2](https://processing.org/download/?processing)
 is the last version that works with this code (the 3.2 does not.). You then need to install the [Python mode](http://py.processing.org/tutorials/gettingstarted/).
 
+For interactions, we use the [ControlP5](http://www.sojamo.de/libraries/controlP5/) library.
+In Processing, click `Sketch/Import Library.../Add Library...`, find "ControlP5"
+in the list, select it, and click "Install".
+
 After this, from Processing, click `File/Open...` and select the `braitenberg.pyde` file.
 Then click on the play button, and you should see a
 [Braitenberg vehicle](https://en.wikipedia.org/wiki/Braitenberg_vehicle) roaming around.
