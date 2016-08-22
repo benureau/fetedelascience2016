@@ -1,7 +1,7 @@
 class Interface:
     
-    def __init__(self, cp5):
-        self.lw, self.rw = 20.0, 0.0
+    def __init__(self, cp5, lw=0.0, rw=0.0):
+        self.lw, self.rw = lw, rw
                        
         self.cp5 = cp5
          

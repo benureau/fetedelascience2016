@@ -3,7 +3,7 @@ add_library('controlP5')
 from vehicle import Vehicle
 from interface import Interface
 
-vehicle = Vehicle(400, 400, scale=0.75)
+vehicle = Vehicle(400, 400, scale=0.75, )
 
 
 def setup():
@@ -12,7 +12,7 @@ def setup():
     rectMode(CENTER)
     frameRate(30)
     size(800, 800)
-    interface = Interface(ControlP5(this))
+    interface = Interface(ControlP5(this), lw=20.0)
     
     
 def draw():
