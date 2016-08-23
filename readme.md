@@ -8,9 +8,7 @@ in Bordeaux, France, that will be held the 15th and 16th of October 2016.
 
 ## Installation
 
-To install, you need to download and install [Processing](https://processing.org/).
-At the time of writing, [Processing 3.1.2](https://processing.org/download/?processing)
-is the last version that works with this code (the 3.2 does not.). You then need to install the [Python mode](http://py.processing.org/tutorials/gettingstarted/).
+To install, you need to download and install [Processing](https://processing.org/) (the code was tested on 3.2.1). You then need to install the [Python mode](http://py.processing.org/tutorials/gettingstarted/).
 
 For interactions, we use the [ControlP5](http://www.sojamo.de/libraries/controlP5/) library.
 In Processing, click `Sketch/Import Library.../Add Library...`, find "ControlP5"
