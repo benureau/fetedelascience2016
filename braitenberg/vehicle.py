@@ -1,6 +1,3 @@
-from transform import Transformation
-
-
 class Vehicle:
 
     def __init__(self, x, y, angle=0.0, scale=1.0):
@@ -12,7 +9,7 @@ class Vehicle:
         self.sensors = [Sensor(self,  25, -165), 
                         Sensor(self, -25, -165)]
 
-    def step(self, dt=0.01):
+    def step(self, world, dt=0.01):
         v2, v1 = self.speed
         if v2 == v1:
             dangle, dy, dx = 0.0, - dt * v1, 0.0
@@ -29,7 +26,14 @@ class Vehicle:
         self.pos[0] += dx
         self.pos[1] += dy
         
-        # TODO: sensors
+        for sensor in self.sensors:
+            sensor.activation(world.lights.values())
+
+        # for sensor in self.sensors:
+        #     x, y, a = sensor.world_pos()
+        #     stroke(0)
+        #     print(x, y)
+        #     rect(x, y, 5, 5)             
 
     def draw(self):
         pushMatrix()
@@ -72,30 +76,32 @@ class Sensor:
         self.tpos    = tx, ty
         self.tangle  = tangle
 
-
     def world_pos(self):
         """Compute the absolute world position of the sensors"""
-
+        pushMatrix()
         # transformation matrix of the vehicle
-        M = Transformation().translate(*self.vehicle.pos).rotate(-self.vehicle.angle)
+        translate(*self.vehicle.pos)
+        rotate(self.vehicle.angle)
         # adding sensor transformation
-        scale = self.vehicle.scale
-        M.translate(scale * self.tpos[0], scale * self.tpos[1]).rotate(self.tangle)
-        pos = M.apply(0, 0)
-        return pos[0], pos[1], self.vehicle.angle + self.tangle 
+        translate(0.75 * self.tpos[0], 0.75 * self.tpos[1])
+        rotate(self.tangle)
+        x, y = modelX(0, 0, 0), modelY(0, 0, 0)
+        popMatrix()
+                     
+        return x, y, self.vehicle.angle + self.tangle 
                 
     def activation(self, light_sources):
         """Compute how much light the sensor is receiving."""
         act = 0.0
-        x, y, angle = world_pos() 
+        x, y, angle = self.world_pos() 
                 
-        for light in light_sources:
-            # compute the angle with the light 
-            theta = atan2(light.pos[0] - x, light.pos[1] - y)
-            diff_angle = abs((theta - angle) % (2*PI)/PI)        
-            # compute the light output (linear decrease)
-            d = dist(light.pos[0], light.pos[1], x, y)
-            act += max((1.0 - diff_angle) * (400 - d)/400, 0)
+        # for light in light_sources:
+        #     # compute the angle with the light 
+        #     theta = atan2(light.pos[0] - x, light.pos[1] - y)
+        #     diff_angle = abs((theta - angle) % (2*PI)/PI)        
+        #     # compute the light output (linear decrease)
+        #     d = dist(light.pos[0], light.pos[1], x, y)
+        #     act += max((1.0 - diff_angle) * (400 - d/light.intensity)/400, 0)
         
         return act
     
