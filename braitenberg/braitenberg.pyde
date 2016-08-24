@@ -6,7 +6,7 @@ from interface import Interface
 
 
 world   = World()
-vehicle = Vehicle(400, 400, scale=0.75)
+vehicle = Vehicle(400, 400)
 
 def setup():
     global interface
@@ -15,8 +15,8 @@ def setup():
     frameRate(30)
     size(800, 800, P2D)
 
-    interface = Interface(ControlP5(this), lw=5.0)
-    world.add_light('mouse', 300, 300, 100.0)    
+    interface = Interface(ControlP5(this), lw=10.0)
+    world.add_light('mouse', 200, 200, 100.0)    
     vehicle.speed = interface.lw, interface.rw
     
     

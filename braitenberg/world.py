@@ -20,10 +20,10 @@ class Light:
     
     def __init__(self, x, y, intensity=1.0):
         """Light with position x,y and a given intensity."""
-        self.pos = x, y
+        self.x, self.y = x, y
         self.intensity = intensity  # a negative weight is repulsive.
         
     def draw(self):
         noStroke()
         fill(255, 215, 0, min(255, 20*self.intensity))
-        ellipse(self.pos[0], self.pos[1], 20.0, 20.0)
+        ellipse(self.x, self.y, 20.0, 20.0)
