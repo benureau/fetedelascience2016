@@ -13,9 +13,10 @@ class Vehicle:
         self.left_wheel  = Wheel(self, 0, -50, side='left')
         self.right_wheel = Wheel(self, 0,  50, side='right')
         self.links   = [Link(self.sensors[0].plug, self.left_wheel.plug),
-                        Link(self.sensors[0].plug, self.right_wheel.plug),
-                        Link(self.sensors[1].plug, self.left_wheel.plug),
-                        Link(self.sensors[1].plug, self.right_wheel.plug),]
+                        #Link(self.sensors[0].plug, self.right_wheel.plug),
+                        #Link(self.sensors[1].plug, self.left_wheel.plug),
+                        Link(self.sensors[1].plug, self.right_wheel.plug),
+                       ]
 
     @property
     def wheel_speeds(self):
@@ -27,10 +28,28 @@ class Vehicle:
         self.left_wheel.speed, self.right_wheel.speed = lw, rw
 
     def world_pos(self):
+        """Return the world position of the vehicle"""
         return self.x, self.y, self.angle
 
     def step(self, world, dt=0.01):
-        v1, v2 = self.speed
+        """Update the state of the vehicle"""
+        self.update_wheel_speed(world.lights)
+        self.update_position(dt)
+        
+    def update_wheel_speed(self, lights):
+        """Update the wheel speeds as a function of the sensors activity"""
+        for sensor in self.sensors:
+            sensor.activation(lights.values())
+
+        for link in self.links:
+            link.step()
+            
+        self.left_wheel.step()
+        self.right_wheel.step()
+        
+                
+    def update_position(self, dt):
+        v1, v2 = self.wheel_speeds
         if v2 == v1:
             dangle, dy, dx = 0.0, 0.0, dt * v1
         else:
@@ -46,8 +65,6 @@ class Vehicle:
         self.x += dx
         self.y += dy
         
-        for sensor in self.sensors:
-            sensor.activation(world.lights.values())
 
 #         # DEBUG: display where sensors think they are.
 #         for sensor in self.sensors:
@@ -97,6 +114,7 @@ class Wheel:
         plug_y = self.size[1]/2 if side == 'left' else -self.size[1]/2
         plug_a = HALF_PI        if side == 'left' else -HALF_PI
         self.plug = Plug(self, 0, plug_y, angle=plug_a, bend=20)
+        self.acts = []
 
     def world_pos(self):
         px, py, pangle = self.parent.world_pos()
@@ -110,7 +128,19 @@ class Wheel:
         noFill()
         rect(self.x, self.y, self.size[0], self.size[1], 6, 6, 6, 6)
 
-
+    def receive(self, act):
+        self.acts.append(act)
+        
+    def step(self):
+        """Compute speed"""
+        if len(self.acts) > 0:
+            s = 0
+            for act in self.acts:
+                print(act)
+                s += act
+            self.speed = s/len(self.acts)
+            self.acts = []
+            
 
 class Sensor:
     
@@ -125,6 +155,8 @@ class Sensor:
         self.x, self.y = x, y
         self.angle     = angle
         self.plug      = Plug(self, -5, 0, angle=PI, bend=40)
+        self.act       = 0.0
+        self.w         = 100.0
 
     def world_pos(self):
         """Compute the absolute world position of the sensors"""
@@ -158,6 +190,8 @@ class Sensor:
             # compute the light output (linear decrease)
             d = dist(light.x, light.y, x, y)
             self.act += max((1.0 - diff_angle/PI) * (400 - d/light.intensity)/400, 0)
+        
+        self.act *= 100.0
         
         return self.act
     

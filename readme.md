@@ -28,7 +28,7 @@ This is currently a work in progress. Here is the roadmap:
 - [x] Sliders for direct wheel speed control
 - [x] Light, Sensors and World objects
 - [ ] Boundary behavior
-- [ ] Neural network for the Braitenberg vehicle
+- [x] Neural network for the Braitenberg vehicle
 - [ ] Following/avoiding the mouse proof-of-concept
 - [ ] Sliders for neural network weights
 - [ ] Error and delta rule computation
