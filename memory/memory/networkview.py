@@ -19,11 +19,11 @@ class NetworkView:
         h_tile = len(self.tv.shapenames)
 
         noStroke()
-        fill(200)
+        fill(230)
         for j_t in range(self.tv.w):
             for i_t in range(self.tv.h):
-                rect((j_t * w_tile + 0.6) * a, (i_t * h_tile + 0.6) * a, 
-                     a * (w_tile - 0.2), a * (h_tile - 0.2))
+                rect((j_t * w_tile + 0.7) * a, (i_t * h_tile + 0.7) * a, 
+                     a * (w_tile - 0.4), a * (h_tile - 0.4))
                      
                                                                                                                                     
         stroke(100)

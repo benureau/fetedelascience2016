@@ -49,10 +49,11 @@ class TileArray:
             for j in range(self.h):
                 pushMatrix()
                 translate(i * self.tilesize, j * self.tilesize)
-                noFill()
-                stroke(200)
+                fill(230)
+                noStroke()
                 strokeWeight(2)
-                rect(3, 3, self.tilesize - 6, self.tilesize - 6)
+                rect(0.1 * self.tilesize, 0.1 * self.tilesize, 
+                     0.8 * self.tilesize, 0.8 * self.tilesize)
                 if (i, j) in self.tiles:
                     self.tiles[(i, j)].draw(self.tilesize)
                 popMatrix()
