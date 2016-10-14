@@ -8,8 +8,8 @@ class Vehicle:
         self.y     = y
         self.angle = angle
         self.w, self.h, self.sizescale = w, h, sizescale
-        self.sensors = [Sensor(self, 1.03125 * self.h,  self.w/4),
-                        Sensor(self, 1.03125 * self.h, -self.w/4)]
+        self.sensors = [Sensor(self, 1.03125 * self.h,  self.w/4, angle=+radians(20)),
+                        Sensor(self, 1.03125 * self.h, -self.w/4, angle=-radians(20))]
         wheel_size = (self.sizescale * 40, self.sizescale * 20)
         self.left_wheel  = Wheel(self, 0, -self.w/2, side='left',  size=wheel_size)
         self.right_wheel = Wheel(self, 0,  self.w/2, side='right', size=wheel_size)
@@ -137,7 +137,7 @@ class Wheel:
         if len(self.acts) > 0:
             s = 0
             for act in self.acts:
-                print(act)
+
                 s += act
             self.speed = 0.5*exp(5.0*s)/len(self.acts)
             self.acts = []
@@ -183,7 +183,6 @@ class Sensor:
         for light in light_sources:
             # compute the angle with the light
             theta = atan2(light.y - y, light.x - x)
-            print(theta)
             # arc(30, 90, 40, 40, 0, theta % (2*PI), PIE)
 
             diff_angle = abs(((theta % TWO_PI) - (angle % TWO_PI)))

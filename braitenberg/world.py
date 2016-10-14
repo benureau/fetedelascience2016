@@ -1,7 +1,8 @@
 
 class World:
 
-    def __init__(self):
+    def __init__(self, w, h):
+        self.center = w/2, h/2
         self.lights = {}
 
     def add_light(self, name, x, y, intensity):
@@ -12,9 +13,34 @@ class World:
 
 
     def draw(self):
+        stroke(0, 100)
+        res = 400
+        x_c, y_c = self.center
+        x_0 = int(x_c) - (int(x_c) % res) 
+        y_0 = int(y_c) - (int(y_c) % res) 
+            
+        for i in range(-2, 3):
+            line(x_0 + i*res, y_c - height, x_0 + i*res, y_c + height)
+        for j in range(-2, 3):
+            line(x_c - width, y_0 + j*res, x_c + width, y_0 + j*res)
+        
         for light in self.lights.values():
             light.draw()
 
+    def recenter(self, vehicle):
+        """If the vehicle is too close of an edge, change the world's 
+        screen offset, to translate the view of world. 
+        """
+        buffer = 200
+        x_c, y_c = self.center
+        if vehicle.x - (x_c - width/2) < buffer:
+            self.center = vehicle.x - buffer + width/2, y_c
+        if (x_c + width/2) - vehicle.x  < buffer:
+            self.center = vehicle.x + buffer - width/2, y_c
+        if vehicle.y - (y_c - height/2)  < buffer:
+            self.center = self.center[0], vehicle.y - buffer + height/2
+        if (y_c + height/2) - vehicle.y  < buffer:
+            self.center = self.center[0], vehicle.y + buffer - height/2
 
 class Light:
 
