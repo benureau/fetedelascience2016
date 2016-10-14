@@ -6,7 +6,7 @@ from interface import Interface
 
 
 world   = World()
-vehicle = Vehicle(400, 400)
+vehicle = Vehicle(400, 400, w=50, h=80, sizescale=0.65)
 
 def setup():
     global interface

@@ -3,15 +3,16 @@ from links import Link, Plug
 
 class Vehicle:
 
-    def __init__(self, x, y, angle=0.0):
+    def __init__(self, x, y, angle=0.0, w=100, h=160, sizescale=1.0):
         self.x     = x
         self.y     = y
         self.angle = angle
-        self.width = 100
-        self.sensors = [Sensor(self, 165,  25),
-                        Sensor(self, 165, -25)]
-        self.left_wheel  = Wheel(self, 0, -50, side='left')
-        self.right_wheel = Wheel(self, 0,  50, side='right')
+        self.w, self.h, self.sizescale = w, h, sizescale
+        self.sensors = [Sensor(self, 1.03125 * self.h,  self.w/4),
+                        Sensor(self, 1.03125 * self.h, -self.w/4)]
+        wheel_size = (self.sizescale * 40, self.sizescale * 20)
+        self.left_wheel  = Wheel(self, 0, -self.w/2, side='left',  size=wheel_size)
+        self.right_wheel = Wheel(self, 0,  self.w/2, side='right', size=wheel_size)
         self.links   = [Link(self.sensors[0].plug, self.left_wheel.plug),
                         #Link(self.sensors[0].plug, self.right_wheel.plug),
                         #Link(self.sensors[1].plug, self.left_wheel.plug),
@@ -53,8 +54,8 @@ class Vehicle:
         if v2 == v1:
             dangle, dy, dx = 0.0, 0.0, dt * v1
         else:
-            dangle = dt / self.width * (v1 - v2)
-            R = self.width / 2 * (v1 + v2) / (v2 - v1)
+            dangle = dt / self.w * (v1 - v2)
+            R = self.w / 2 * (v1 + v2) / (v2 - v1)
             dx = -cos(dangle / 2) * 2 * R * sin(dangle / 2)
             dy =  sin(dangle / 2) * 2 * R * sin(dangle / 2)
 
@@ -80,7 +81,7 @@ class Vehicle:
         stroke(0)
         strokeWeight(1)
         noFill()
-        rect(70, 0, 160, 80)
+        rect(0.4375 * self.h, 0, self.h, 0.8*self.w)
 
         self.left_wheel.draw()
         self.right_wheel.draw()
@@ -138,7 +139,7 @@ class Wheel:
             for act in self.acts:
                 print(act)
                 s += act
-            self.speed = s/len(self.acts)
+            self.speed = 0.5*exp(5.0*s)/len(self.acts)
             self.acts = []
 
 
@@ -182,6 +183,7 @@ class Sensor:
         for light in light_sources:
             # compute the angle with the light
             theta = atan2(light.y - y, light.x - x)
+            print(theta)
             # arc(30, 90, 40, 40, 0, theta % (2*PI), PIE)
 
             diff_angle = abs(((theta % TWO_PI) - (angle % TWO_PI)))
@@ -191,7 +193,7 @@ class Sensor:
             d = dist(light.x, light.y, x, y)
             self.act += max((1.0 - diff_angle/PI) * (400 - d/light.intensity)/400, 0)
 
-        self.act *= 100.0
+        self.act *= 1.0
 
         return self.act
 
