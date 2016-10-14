@@ -24,3 +24,4 @@ def draw():
     nv.draw()
 
 def mousePressed():
+    pass

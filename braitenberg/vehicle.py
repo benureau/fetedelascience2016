@@ -14,8 +14,8 @@ class Vehicle:
         self.left_wheel  = Wheel(self, 0, -self.w/2, side='left',  size=wheel_size)
         self.right_wheel = Wheel(self, 0,  self.w/2, side='right', size=wheel_size)
         self.links   = [Link(self.sensors[0].plug, self.left_wheel.plug),
-                        #Link(self.sensors[0].plug, self.right_wheel.plug),
-                        #Link(self.sensors[1].plug, self.left_wheel.plug),
+                        Link(self.sensors[0].plug, self.right_wheel.plug, w0=0.0),
+                        Link(self.sensors[1].plug, self.left_wheel.plug, w0=0.0),
                         Link(self.sensors[1].plug, self.right_wheel.plug),
                        ]
 
@@ -114,7 +114,7 @@ class Wheel:
 
         plug_y = self.size[1]/2 if side == 'left' else -self.size[1]/2
         plug_a = HALF_PI        if side == 'left' else -HALF_PI
-        self.plug = Plug(self, 0, plug_y, angle=plug_a, bend=20)
+        self.plug = Plug(self, 0, plug_y, angle=plug_a, bend=15)
         self.acts = []
 
     def world_pos(self):
@@ -139,7 +139,7 @@ class Wheel:
             for act in self.acts:
 
                 s += act
-            self.speed = 0.5*exp(5.0*s)/len(self.acts)
+            self.speed = 1.0*exp(5.0*s)/len(self.acts)
             self.acts = []
 
 
@@ -155,7 +155,7 @@ class Sensor:
         self.vehicle   = vehicle
         self.x, self.y = x, y
         self.angle     = angle
-        self.plug      = Plug(self, -5, 0, angle=PI, bend=40)
+        self.plug      = Plug(self, -5, 0, angle=PI, bend=10)
         self.act       = 0.0
         self.w         = 100.0
 
