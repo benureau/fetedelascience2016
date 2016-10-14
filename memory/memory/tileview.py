@@ -1,7 +1,7 @@
 COLORMAP   = {'blue': (0, 0, 255), 'red': (255, 0, 0)}
 
 class TileObject:
-    
+
     def __init__(self, shapename, colorname):
         """
         :param shapename:  type of shape (triangle, square)
@@ -9,7 +9,7 @@ class TileObject:
         """
         self.shapename = shapename
         self.colorname = colorname
-        
+
     def draw(self, tilesize=50):
         fill(*COLORMAP[self.colorname])
         noStroke()
@@ -20,8 +20,8 @@ class TileObject:
             rect((a - b)/2, (a - b)/2, b, b)
 
 class TileArray:
-    
-    def __init__(self, w, h, shapenames, colornames, 
+
+    def __init__(self, w, h, shapenames, colornames,
                        screenpos=(0, 0), tilesize=30):
         self.w, self.h = w, h
         self.shapenames = shapenames
@@ -31,7 +31,7 @@ class TileArray:
         self.tiles = {} # [[None for j in range(h)] for i in range(w)]
         self.screenpos = screenpos
         self.tilesize = tilesize
-        
+
     def add_object(self, tile, pos):
         """Add an object to the tile array"""
         assert 0 <= pos[0] < self.w and 0 <= pos[1] < self.h
@@ -40,7 +40,7 @@ class TileArray:
         pos = tuple(pos)
         assert pos not in self.tiles
         self.tiles[pos] = tile
-        
+
     def draw(self):
         x_0, y_0 = self.screenpos
         pushMatrix()
@@ -52,9 +52,13 @@ class TileArray:
                 fill(230)
                 noStroke()
                 strokeWeight(2)
-                rect(0.1 * self.tilesize, 0.1 * self.tilesize, 
+                rect(0.1 * self.tilesize, 0.1 * self.tilesize,
                      0.8 * self.tilesize, 0.8 * self.tilesize)
                 if (i, j) in self.tiles:
                     self.tiles[(i, j)].draw(self.tilesize)
                 popMatrix()
         popMatrix()
+
+    def remove_object(self, pos):
+        if tuple(pos) in self.tiles:
+            self.tiles.pop(tuple(pos))

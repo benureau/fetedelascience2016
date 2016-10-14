@@ -8,7 +8,7 @@ class Vehicle:
         self.y     = y
         self.angle = angle
         self.width = 100
-        self.sensors = [Sensor(self, 165,  25), 
+        self.sensors = [Sensor(self, 165,  25),
                         Sensor(self, 165, -25)]
         self.left_wheel  = Wheel(self, 0, -50, side='left')
         self.right_wheel = Wheel(self, 0,  50, side='right')
@@ -35,7 +35,7 @@ class Vehicle:
         """Update the state of the vehicle"""
         self.update_wheel_speed(world.lights)
         self.update_position(dt)
-        
+
     def update_wheel_speed(self, lights):
         """Update the wheel speeds as a function of the sensors activity"""
         for sensor in self.sensors:
@@ -43,11 +43,11 @@ class Vehicle:
 
         for link in self.links:
             link.step()
-            
+
         self.left_wheel.step()
         self.right_wheel.step()
-        
-                
+
+
     def update_position(self, dt):
         v1, v2 = self.wheel_speeds
         if v2 == v1:
@@ -64,27 +64,27 @@ class Vehicle:
 
         self.x += dx
         self.y += dy
-        
+
 
 #         # DEBUG: display where sensors think they are.
 #         for sensor in self.sensors:
 #             x, y, a = sensor.world_pos()
 #             stroke(0)
-#             rect(x, y, 5, 5)             
+#             rect(x, y, 5, 5)
 
     def draw(self):
         pushMatrix()
         translate(self.x, self.y)
         rotate(self.angle)
-        
+
         stroke(0)
         strokeWeight(1)
         noFill()
         rect(70, 0, 160, 80)
-        
+
         self.left_wheel.draw()
         self.right_wheel.draw()
-        
+
         noFill()
         #bezier(0, -40, 0, -20,  40, -25, 150, -25)
         #bezier(0, -40, 0, -20, 100,  25, 150,  25)
@@ -118,7 +118,7 @@ class Wheel:
 
     def world_pos(self):
         px, py, pangle = self.parent.world_pos()
-        dx, dy = ( self.x * cos(-pangle) + self.y * sin(-pangle), 
+        dx, dy = ( self.x * cos(-pangle) + self.y * sin(-pangle),
                   -self.x * sin(-pangle) + self.y * cos(-pangle))
         return px + dx, py + dy, pangle
 
@@ -130,7 +130,7 @@ class Wheel:
 
     def receive(self, act):
         self.acts.append(act)
-        
+
     def step(self):
         """Compute speed"""
         if len(self.acts) > 0:
@@ -140,13 +140,13 @@ class Wheel:
                 s += act
             self.speed = s/len(self.acts)
             self.acts = []
-            
+
 
 class Sensor:
-    
+
     def __init__(self, vehicle, x, y, angle=0.0):
         """Sensor instanciation
-        
+
         :param  tx, ty:  position from the center of the vehicle
         :param  angle:   angle from the anteroposterior axis of the vehicle
                          (anterior direction is zero, posterior is PI or -PI)
@@ -170,31 +170,31 @@ class Sensor:
         rotate(self.angle)
         x, y = modelX(0, 0, 0), modelY(0, 0, 0)
         popMatrix()
-                     
-        return x, y, self.vehicle.angle + self.angle 
-                
+
+        return x, y, self.vehicle.angle + self.angle
+
     def activation(self, light_sources):
         """Compute how much light the sensor is receiving."""
         self.act = 0.0
         x, y, angle = self.world_pos()
         # arc(30, 30, 40, 40, 0, angle, PIE)
-                
+
         for light in light_sources:
-            # compute the angle with the light 
+            # compute the angle with the light
             theta = atan2(light.y - y, light.x - x)
             # arc(30, 90, 40, 40, 0, theta % (2*PI), PIE)
 
-            diff_angle = abs(((theta % TWO_PI) - (angle % TWO_PI)))  
+            diff_angle = abs(((theta % TWO_PI) - (angle % TWO_PI)))
             diff_angle = min(diff_angle, TWO_PI - diff_angle)
             # arc(30, 150, 40, 40, 0, diff_angle, PIE)
             # compute the light output (linear decrease)
             d = dist(light.x, light.y, x, y)
             self.act += max((1.0 - diff_angle/PI) * (400 - d/light.intensity)/400, 0)
-        
+
         self.act *= 100.0
-        
+
         return self.act
-    
+
     def draw(self):
         """Draws the sensor. Assumes vehicule coordinates."""
         pushMatrix()
@@ -204,5 +204,3 @@ class Sensor:
         stroke(0)
         arc(0, 0, 10, 10, HALF_PI, 3*HALF_PI)
         popMatrix()
-        
-        

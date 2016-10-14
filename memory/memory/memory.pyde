@@ -15,11 +15,12 @@ def setup():
     smooth()
     background(255)
 
-        
+
 def draw():
     fill(50)
     textSize(40)
     text("Memory Game", width/2, 100)
     ta.draw()
     nv.draw()
-    
+
+def mousePressed():
