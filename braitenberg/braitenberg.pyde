@@ -41,4 +41,5 @@ def draw():
     popMatrix()
     
     interface.update_sliders()
+    interface.draw()
     #noLoop()

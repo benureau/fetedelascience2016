@@ -81,7 +81,7 @@ class Vehicle:
         stroke(0)
         strokeWeight(1)
         noFill()
-        rect(0.4375 * self.h, 0, self.h, 0.8*self.w)
+        rect(0.4375 * self.h, 0, self.h, 0.7*self.w)
 
         self.left_wheel.draw()
         self.right_wheel.draw()
@@ -201,7 +201,7 @@ class Sensor:
         pushMatrix()
         translate(self.x, self.y)
         rotate(self.angle)
-        fill(255, 0, 0, 255*self.act)
+        fill(255, 215, 0, 255*self.act)
         stroke(0)
         arc(0, 0, 10, 10, HALF_PI, 3*HALF_PI)
         popMatrix()
