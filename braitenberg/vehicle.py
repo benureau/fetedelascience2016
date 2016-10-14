@@ -139,7 +139,10 @@ class Wheel:
             for act in self.acts:
 
                 s += act
-            self.speed = 1.0*exp(5.0*s)/len(self.acts)
+            if s > 0:
+                self.speed = min( 100, 1.0*exp(5.0* s)/len(self.acts))
+            if s < 0:
+                self.speed = max(-100, -1.0*exp(5.0*-s)/len(self.acts))
             self.acts = []
 
 
