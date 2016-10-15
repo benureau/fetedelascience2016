@@ -6,16 +6,18 @@ from interface import Interface
 
 SIDEBAR_WIDTH = 300
 
-w, h = 1100, 800
-world   = World(w - SIDEBAR_WIDTH, h)
-vehicle = Vehicle(400, 400, w=80, h=120, sizescale=0.85)
-
 def setup():
-    global interface
+    global interface, world, vehicle
     smooth(8)
     rectMode(CENTER)
     frameRate(30)
-    size(w, h, P2D)
+    
+#    size(1100, 800, P2D)
+    fullScreen(P2D)
+
+    world   = World(width - SIDEBAR_WIDTH, height)
+    vehicle = Vehicle(400, 400, w=80, h=120, sizescale=0.85)
+
 
     myfont = createFont("DINNextRoundedLTPro-Regular", 16) 
     #loadFont("DINNextRoundedLTPro-Regular-16.vlw")
