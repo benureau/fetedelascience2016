@@ -37,6 +37,10 @@ class Interface:
                 slider.getCaptionLabel().setFont(font)
                 slider.setCaptionLabel("")
         
+            if active:
+                slider.setNumberOfTickMarks(9)
+
+            
             slider.setLock(not active)
         
             self.lines.append((pos[0], pos[1]+150/2, pos[0] + 15, pos[1] + 150/2))                
