@@ -126,7 +126,7 @@ class Wheel:
     def draw(self):
         """Draw a wheel. Assumes vehicule coordinates"""
         stroke(0)
-        noFill()
+        fill(150, 200)
         rect(self.x, self.y, self.size[0], self.size[1], 6, 6, 6, 6)
 
     def receive(self, act):
