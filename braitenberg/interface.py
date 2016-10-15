@@ -60,7 +60,7 @@ class Interface:
                         'Capteur Gauche -> Roue Droite': 3,
                         'Capteur Droite -> Roue Gauche': 0}
 
-        for name, pos in zip(self.linkmap.keys(), [(width-250-8, 520-50), (width-50-8, 520-50), (width-250-8, 380-100), (width-50-8, 380-100)]):
+        for name, pos in zip(self.linkmap.keys(), [(width-250-8, height/2 + 70-50), (width-50-8, height/2 + 70-50), (width-250-8, height/2 - 70-100), (width-50-8, height/2 - 70-100)]):
             w_slider = self.cp5.addSlider(name)
             w_slider.setValue(self.vehicle.links[self.linkmap[name]].w)
             slider_style(w_slider, pos, active=True)
