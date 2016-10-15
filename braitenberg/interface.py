@@ -2,12 +2,13 @@
 
 class Interface:
 
-    def __init__(self, cp5, vehicle, font=None):
+    def __init__(self, cp5, vehicle, font=None, sidebar=300):
         self.lw, self.rw = 0.0, 0.0
 
         self.cp5 = cp5
         self.cp5.setAutoDraw(False)
         self.vehicle = vehicle
+        self.sidebar = sidebar
 
         self.lines = []
 
@@ -72,3 +73,7 @@ class Interface:
         strokeWeight(1)
         for ln in self.lines:
             line(*ln)
+            
+        stroke(0)
+        fill(255)
+        rect(width-self.sidebar/2, height/2, self.sidebar, height) 

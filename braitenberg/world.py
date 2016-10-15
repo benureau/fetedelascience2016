@@ -2,6 +2,7 @@
 class World:
 
     def __init__(self, w, h):
+        self.w, self.h = w, h
         self.center = w/2, h/2
         self.lights = {}
 
@@ -33,14 +34,15 @@ class World:
         """
         buffer = 200
         x_c, y_c = self.center
-        if vehicle.x - (x_c - width/2) < buffer:
-            self.center = vehicle.x - buffer + width/2, y_c
-        if (x_c + width/2) - vehicle.x  < buffer:
-            self.center = vehicle.x + buffer - width/2, y_c
-        if vehicle.y - (y_c - height/2)  < buffer:
-            self.center = self.center[0], vehicle.y - buffer + height/2
-        if (y_c + height/2) - vehicle.y  < buffer:
-            self.center = self.center[0], vehicle.y + buffer - height/2
+        print(vehicle.x, vehicle.y)
+        if vehicle.x - (x_c - self.w/2) < buffer:
+            self.center = vehicle.x - buffer + self.w/2, y_c
+        if (x_c + self.w/2) - vehicle.x  < buffer:
+            self.center = vehicle.x + buffer - self.w/2, y_c
+        if vehicle.y - (y_c - self.h/2)  < buffer:
+            self.center = self.center[0], vehicle.y - buffer + self.h/2
+        if (y_c + self.h/2) - vehicle.y  < buffer:
+            self.center = self.center[0], vehicle.y + buffer - self.h/2
 
 class Light:
 
