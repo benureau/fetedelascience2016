@@ -1,6 +1,8 @@
 from vehicle import Vehicle
 
 
+# -*- coding: utf-8 -*-
+
 class Interface:
 
     def __init__(self, cp5, vehicle, font=None, sidebar=300):
@@ -86,10 +88,17 @@ class Interface:
         self.sidebar_vehicle.sensors[0].act = self.vehicle.sensors[0].act
         self.sidebar_vehicle.sensors[1].act = self.vehicle.sensors[1].act
         self.sidebar_vehicle.draw()
-        
+
+        fill(0)
+        textSize(20)
+        text("Quatre neurones qui", width - 250, 80)
+        text("controlent un robot.", width - 250, 110)
+
+                        
         stroke(color(250,105, 0, 100))
         fill(color(250,105, 0, 100))
         strokeWeight(2)
+
 
         pushMatrix()
         translate(width-1100, height/2 + self.vehicle.h/2)
@@ -103,7 +112,7 @@ class Interface:
         line (930, -40, 900, -40)
         line (900, -40, 850, 0)
 
-        ellipse(970, 420, 4, 4)
+        ellipse(970, -40, 4, 4)
         line (970, -40, 1000, -40)
         line (1000, -40, 1050, 0)
 
