@@ -34,7 +34,6 @@ class World:
         """
         buffer = 200
         x_c, y_c = self.center
-        print(vehicle.x, vehicle.y)
         if vehicle.x - (x_c - self.w/2) < buffer:
             self.center = vehicle.x - buffer + self.w/2, y_c
         if (x_c + self.w/2) - vehicle.x  < buffer:
