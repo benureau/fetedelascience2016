@@ -24,11 +24,13 @@ class Interface:
             
             slider.setSize(16, 150)
             slider.setRange(-100, 100)
-            slider.setColorBackground(color(250,105, 0))
-            slider.setColorForeground(color(255,185, 0))
             if not active:
-                slider.setColorActive(color(255,185, 0))
+                slider.setColorBackground(color(180))
+                slider.setColorForeground(color(100))
+                slider.setColorActive(color(100))
             else:
+                slider.setColorBackground(color(250,105, 0))
+                slider.setColorForeground(color(255,185, 0))
                 slider.setColorActive(color(255,225, 0))
             slider.setColorValue(color(0))
             slider.setColorLabel(color(0))
@@ -62,10 +64,10 @@ class Interface:
 
         for name, pos in zip(self.linkmap.keys(), [(width-250-8, height/2 + 70-50), (width-50-8, height/2 + 70-50), (width-250-8, height/2 - 70-100), (width-50-8, height/2 - 70-100)]):
             w_slider = self.cp5.addSlider(name)
-            w_slider.setValue(self.vehicle.links[self.linkmap[name]].w)
             slider_style(w_slider, pos, active=True)
             w_slider.setRange(-1.0, 1.0)
             w_slider.addListener(self.callback)
+            w_slider.setValue(self.vehicle.links[self.linkmap[name]].w)
             
 
     def callback(self, slider):
@@ -103,10 +105,19 @@ class Interface:
         pushMatrix()
         translate(width-1100, height/2 + self.vehicle.h/2)
 
+        stroke(color(100, 100))
+        fill(color(200, 100))
+        strokeWeight(2)
+
         line (910, 140, 910, 0)
         ellipse(910, 0, 4, 4)
         line (990, 140, 990, 0)
         ellipse(990, 0, 4, 4)
+
+        stroke(color(250,105, 0, 100))
+        fill(color(250,105, 0, 100))
+        strokeWeight(2)
+
 
         ellipse(930, -40, 4, 4)
         line (930, -40, 900, -40)
